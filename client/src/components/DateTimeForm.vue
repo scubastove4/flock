@@ -1,7 +1,7 @@
 <template>
   <div>
     <form>
-      <label for="take-off-date">Take Off</label>
+      <label for="take-off-date">Take Off: </label>
       <input
         id="take-off-date"
         name="takeOffDate"
@@ -29,7 +29,7 @@
         <option>0</option>
         <option v-for="n in 59" :key="n" :value="n">{{ n }}</option>
       </select>
-      <label for="land-date">Land</label>
+      <label for="land-date">Land: </label>
       <input
         id="land-date"
         name="landDate"
