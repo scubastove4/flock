@@ -63,6 +63,10 @@ const landDateTime = ref({
 let timeDiff = ref(null)
 
 const updateStraightHours = (e) => {
+  // if (isNaN(parseInt(e.target.value))) {
+  //   return (timeDiff.value = `Total ${e.target.name}s must be a number`)
+  // } else {
+  // }
   straightHours.value[e.target.name] = parseInt(e.target.value)
 }
 const updateTakeOffDate = (val) => {
@@ -82,6 +86,17 @@ const updateLandTime = (name, val) => {
 }
 
 const showDate = () => {
+  // if (straightHours.value.hour < 0) {
+  //   return (timeDiff.value = 'Total hours must be at least 0')
+  // } else if (isNaN(straightHours.value.hour)) {
+  //   return (timeDiff.value = 'Total hours must be a number')
+  // } else if (straightHours.value.min < 0) {
+  //   return (timeDiff.value = 'Total minutes must be at least 0')
+  // } else if (straightHours.value.min > 59) {
+  //   return (timeDiff.value = 'Total minutes cannot exceed 59')
+  // } else if (isNaN(straightHours.value.min)) {
+  //   return (timeDiff.value = 'Total minutes must be a number')
+  // } else
   if (straightHours.value.hour > 0 || straightHours.value.min > 0) {
     let hoursToMin = straightHours.value.hour * 60
     let totalMin = hoursToMin + straightHours.value.min
