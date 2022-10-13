@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import TimeCalculator from './src/pages/TimeCalculator.vue'
+import TimeCalculator from './pages/TimeCalculator.vue'
 
 const routes = [
   { path: '/', component: TimeCalculator, name: 'TimeCalculator' }
