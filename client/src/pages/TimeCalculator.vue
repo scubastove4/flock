@@ -1,45 +1,22 @@
 <template>
-  <div>
-    <form>
-      <label for="take-off-date">Take Off</label>
-      <input
-        id="take-off-date"
-        name="takeOffDate"
-        type="date"
-        @input="updateTakeOffDate"
-        :value="takeOffDate"
-      />
-      <select id="take-off-hour">
-        <option>0</option>
-        <option v-for="n in 24" :key="n" :value="n">{{ n }}</option>
-      </select>
-      <select id="take-off-min">
-        <option>0</option>
-        <option v-for="n in 59" :key="n" :value="n">{{ n }}</option>
-      </select>
-      <label for="land-date">Land</label>
-      <input
-        id="land-date"
-        name="landDate"
-        type="date"
-        @input="updatelandDate"
-        :value="landDate"
-      />
-      <select id="land-hour">
-        <option>0</option>
-        <option v-for="n in 24" :key="n" :value="n">{{ n }}</option>
-      </select>
-      <select id="land-min">
-        <option>0</option>
-        <option v-for="n in 59" :key="n" :value="n">{{ n }}</option>
-      </select>
-      <button type="button" @click="showDate">clg date</button>
-    </form>
-  </div>
+  <section>
+    <DateTimeForm
+      :takeOffDate="takeOffDate"
+      :landDate="landDate"
+      @updateTakeOffDate="updateTakeOffDate"
+      @updateTakeOffTime="updateTakeOffTime"
+      @updateLandDate="updateLandDate"
+      @updateLandTime="updateLandTime"
+    />
+    <button type="button" @click="showDate">clg date</button>
+    <h2 id="result" v-if="timeDiff">{{ timeDiff }}</h2>
+  </section>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+
+import DateTimeForm from '../components/DateTimeForm.vue'
 
 const takeOffDate = ref(null)
 const landDate = ref(null)
@@ -62,11 +39,22 @@ const landDateTime = ref({
   sec: 0
 })
 
-const updateTakeOffDate = (e) => {
-  takeOffDate.value = e.target.value
+let timeDiff = ref(null)
+
+const updateTakeOffDate = (val) => {
+  takeOffDate.value = val
 }
-const updatelandDate = (e) => {
-  landDate.value = e.target.value
+
+const updateTakeOffTime = (name, val) => {
+  takeOffDateTime.value[name] = val
+}
+
+const updateLandDate = (val) => {
+  landDate.value = val
+}
+
+const updateLandTime = (name, val) => {
+  landDateTime.value[name] = val
 }
 
 const showDate = () => {
@@ -85,7 +73,25 @@ const showDate = () => {
     month: landDateArr[1],
     day: landDateArr[2]
   }
-  console.log(takeOffDateTime.value, landDateTime.value)
+
+  let start = new Date(
+    takeOffDateTime.value.year,
+    takeOffDateTime.value.month - 1,
+    takeOffDateTime.value.day,
+    takeOffDateTime.value.hour,
+    takeOffDateTime.value.min,
+    takeOffDateTime.value.sec
+  )
+  let end = new Date(
+    landDateTime.value.year,
+    landDateTime.value.month - 1,
+    landDateTime.value.day,
+    landDateTime.value.hour,
+    landDateTime.value.min,
+    landDateTime.value.sec
+  )
+  return (timeDiff.value = (end - start) / (1000 * 60 * 60))
+  // console.log(start, end, timeDiff)
 }
 </script>
 
